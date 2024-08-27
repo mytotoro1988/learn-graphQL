@@ -26,8 +26,8 @@ const typeDefs = gql`
 
   ## set
   type Mutation {
-    createAuthor(id: ID!, name: String, age: Int): Author
-    createBook(id: ID!, name: String, author: String): Book
+    createAuthor(name: String, age: Int): Author
+    createBook(name: String, genre: String, authorId: String): Book
   }
 `;
 module.exports = typeDefs;
