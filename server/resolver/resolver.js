@@ -1,38 +1,31 @@
-const { books, authors } = require("../data/static");
-const Author = require("../models/Author");
-const Book = require("../models/Book");
-
 const resolvers = {
   Query: {
-    books: async (parent, args, context) => {
-      return await context.mongoDataMethods.getAllBooks();
+    books: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.getAllBooks(),
+    book: async (parent, { id }, { mongoDataMethods }) =>
+      await mongoDataMethods.getBookById(id),
+    authors: async (parent, args, { mongoDataMethods }) => {
+      await mongoDataMethods.getAllAuthors();
     },
-    book: (parent, args, context) => books.find((book) => book.id == args.id),
-    authors: (parent, args, context) => {
-      return context.mongoDataMethods.getAllAuthors();
-    },
-    author: (parent, args, context) =>
-      authors.find((author) => author.id == args.id),
+    author: async (parent, { id }, { mongoDataMethods }) =>
+      await mongoDataMethods.getAuthorById(id),
   },
   Book: {
-    author: (parent, args, context) => {
-      return authors.find((author) => author.id == parent.authorId);
+    author: async (parent, args, { mongoDataMethods }) => {
+      const data = await mongoDataMethods.getAllAuthors();
+      return data.find((author) => author.id == parent.authorId);
     },
   },
   Author: {
-    books: (parent, args, context) => {
-      return books.filter((book) => book.authorId == parent.id);
+    books: async (parent, args, { mongoDataMethods }) => {
+      return await mongoDataMethods.getAllBooks({ authorId: parent.id });
     },
   },
   Mutation: {
-    createAuthor: async (parent, args, context) => {
-      const newAuthor = new Author(args);
-      return await newAuthor.save();
-    },
-    createBook: async (parent, args, context) => {
-      const newBook = new Book(args);
-      return await newBook.save();
-    },
+    createAuthor: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.createAuthor(args),
+    createBook: async (parent, args, { mongoDataMethods }) =>
+      await mongoDataMethods.createBook(args),
   },
 };
 
