@@ -6,9 +6,17 @@ const BookDetail = () => {
     <div>
       <Card bg="info" text="white" className="shadow">
         <Card.Body>
-          <Card.TiSubtitletle>van</Card.TiSubtitletle>
-          <Card.Title>genre</Card.Title>
-          <Card.Text>Content</Card.Text>
+          <Card.Title>Truyen</Card.Title>
+          <Card.Subtitle>genre</Card.Subtitle>
+          <div>
+            <div>Vu trong phung</div>
+            <div>50</div>
+            <div>all books by this author: </div>
+            <div className="m-3">
+              <div>so do</div>
+              <div>lang vu dai</div>
+            </div>
+          </div>
         </Card.Body>
       </Card>
     </div>

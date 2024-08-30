@@ -2,6 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import BookDetail from "./BookDetail";
 
 const BookList = () => {
   return (
@@ -36,6 +37,9 @@ const BookList = () => {
         >
           data
         </Card>
+      </Col>
+      <Col>
+        <BookDetail />
       </Col>
     </Row>
   );
